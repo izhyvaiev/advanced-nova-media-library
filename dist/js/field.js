@@ -2273,7 +2273,7 @@ __webpack_require__.r(__webpack_exports__);
       } catch (e) {
         alert(e.message)
       } finally {
-        delete this.$refs.updateButton.disabled = false
+        this.$refs.updateButton.disabled = false
       }
     },
     onCancel: function onCancel() {
