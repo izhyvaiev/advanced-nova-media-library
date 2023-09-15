@@ -2258,6 +2258,7 @@ __webpack_require__.r(__webpack_exports__);
       this.rotate = 0;
     },
     onSave: async function onSave() {
+      this.$refs.updateButton.disabled = 'disabled'
       const { currentSrc } = this.$refs.clipper.imgEl
       try {
         const response = await fetch('/api/rotate', {
@@ -2271,6 +2272,8 @@ __webpack_require__.r(__webpack_exports__);
         this.$emit('close');
       } catch (e) {
         alert(e.message)
+      } finally {
+        delete this.$refs.updateButton.disabled = false
       }
     },
     onCancel: function onCancel() {
