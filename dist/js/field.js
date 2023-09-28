@@ -2270,8 +2270,8 @@ __webpack_require__.r(__webpack_exports__);
         });
         await response.json()
         document.querySelectorAll('img.gallery-image').forEach(img => {
-          img.src = `${img.src}?v=${Date.now()
-        }`})
+          img.src = `${img.src}?v=${Date.now()}`
+        })
         this.$emit('close');
       } catch (e) {
         alert(e.message)
