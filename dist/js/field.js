@@ -2269,6 +2269,9 @@ __webpack_require__.r(__webpack_exports__);
           body: JSON.stringify({ currentSrc, angle: this.rotate }),
         });
         await response.json()
+        document.querySelectorAll('img.gallery-image').forEach(img => {
+          img.src = `${img.src}?v=${Date.now()
+        }`})
         this.$emit('close');
       } catch (e) {
         alert(e.message)
