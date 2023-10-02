@@ -2258,26 +2258,27 @@ __webpack_require__.r(__webpack_exports__);
       this.rotate = 0;
     },
     onSave: async function onSave() {
-      this.$refs.updateButton.disabled = 'disabled'
-      const { currentSrc } = this.$refs.clipper.imgEl
-      try {
+        this.$refs.updateButton.disabled = 'disabled'
+        const { currentSrc } = this.$refs.clipper.imgEl
+        const { pos: { sheight, swidth, sx, sy } } = this.$refs.clipper.getDrawPos()
+        const separatorPosition = currentSrc.indexOf('?')
+        const originalSrc = currentSrc.substring(0, separatorPosition)
         const response = await fetch('/api/rotate', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ currentSrc, angle: this.rotate }),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ currentSrc, angle: this.rotate, sheight, swidth, sx, sy }),
         });
-        await response.json()
-        document.querySelectorAll('img.gallery-image').forEach(img => {
-          img.src = `${img.src}?v=${Date.now()}`
-        })
-        this.$emit('close');
-      } catch (e) {
-        alert(e.message)
-      } finally {
+        const json = await response.json()
+        if (!response.ok) {
+            alert(json.message)
+        } else {
+            const img = document.querySelector(`img.gallery-image[src="${currentSrc}"]`)
+            img.src = `${originalSrc}?v=${Date.now()}`
+            this.$emit('close');
+        }
         this.$refs.updateButton.disabled = false
-      }
     },
     onCancel: function onCancel() {
       if (this.cropAnyway) {
